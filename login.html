@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión · Portal Clínico Alianza ALES & IPS</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Estilos del Sistema -->
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+  <style>
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 1.5rem;
+      background: radial-gradient(circle at 10% 20%, rgba(26, 120, 194, 0.08) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 80%, rgba(34, 164, 93, 0.08) 0%, transparent 40%);
+    }
+    .glow-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .glow-ales {
+      top: -80px;
+      left: -80px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.35) 0%, transparent 70%);
+    }
+    .glow-ips {
+      bottom: -80px;
+      right: -80px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(0, 230, 118, 0.3) 0%, transparent 70%);
+    }
+    .auth-card {
+      max-width: 500px;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 229, 255, 0.35) !important;
+      background: rgba(18, 24, 38, 0.95);
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 229, 255, 0.2);
+      backdrop-filter: blur(20px);
+      position: relative;
+      z-index: 1;
+    }
+    [data-bs-theme="light"] .auth-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(26, 120, 194, 0.3) !important;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+    }
+    .auth-header {
+      background: linear-gradient(180deg, rgba(0, 229, 255, 0.1) 0%, rgba(0, 230, 118, 0.05) 100%);
+      padding: 2rem 1.5rem 1.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <div class="glow-circle glow-ales"></div>
+    <div class="glow-circle glow-ips"></div>
+
+    <!-- Switch de tema flotante -->
+    <div class="position-absolute top-0 end-0 p-3 z-3">
+      <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="toggleTheme()" title="Cambiar tema">
+        <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+      </button>
+    </div>
+
+    <div class="card auth-card">
+      <div class="auth-header">
+        <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+          <div class="bg-white p-2 rounded-3 border shadow-sm">
+            <img src="/assets/img/logo-ales.png" alt="Fundación ALES" style="height: 38px; max-width: 120px; object-fit: contain;">
+          </div>
+          <span class="fs-4 text-muted fw-bold">✕</span>
+          <div class="bg-white p-2 rounded-3 border shadow-sm">
+            <img src="/assets/img/logo-ips.png" alt="IPS Restaurando Vidas" style="height: 38px; max-width: 120px; object-fit: contain;">
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-2 mb-2">
+          <span class="badge bg-primary px-2 py-1">Fundación ALES</span>
+          <span class="badge bg-success px-2 py-1">IPS Restaurando Vidas</span>
+        </div>
+
+        <h3 class="fw-bold mb-1">Atención Clínica Integral</h3>
+        <p class="text-muted small mb-0">Amor, Luz y Esperanza para Restaurar Vidas</p>
+      </div>
+
+      <div class="card-body p-4">
+        <div class="text-center mb-4">
+          <h5 class="fw-bold mb-1">Iniciar Sesión</h5>
+          <p class="text-muted small mb-0">Ingresa al portal con tus credenciales asignadas</p>
+        </div>
+
+        <div id="login-error-alert" class="alert alert-danger d-none py-2 px-3 small d-flex align-items-center gap-2" role="alert">
+          <i class="bx bx-error-circle fs-5"></i>
+          <span id="login-error-text"></span>
+        </div>
+
+        <form id="login-form">
+          <div class="mb-3">
+            <label for="usuario" class="form-label small fw-semibold">Nombre de Usuario</label>
+            <div class="input-group">
+              <span class="input-group-text bg-body-tertiary"><i class="bx bx-user"></i></span>
+              <input type="text" id="usuario" class="form-control" placeholder="ej: admin o tu usuario" required autofocus autocomplete="username">
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label for="password" class="form-label small fw-semibold">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text bg-body-tertiary"><i class="bx bx-lock-alt"></i></span>
+              <input type="password" id="password" class="form-control" placeholder="········" required autocomplete="current-password">
+              <button class="btn btn-outline-secondary" type="button" id="toggle-password" title="Mostrar u ocultar contraseña">
+                <i id="eye-icon" class="bx bx-show"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm d-flex align-items-center justify-content-center gap-2">
+            <i class="bx bx-log-in-circle fs-5"></i>
+            <span>Acceder al Sistema</span>
+          </button>
+        </form>
+
+        <div class="text-center mt-4 pt-3 border-top">
+          <span class="text-muted small d-block mb-2">Sistema Seguro de Registro Clínico · Salud Mental</span>
+          <a href="/index.html" class="text-decoration-none small text-primary fw-semibold d-inline-flex align-items-center gap-1">
+            <i class="bx bx-arrow-back"></i>
+            <span>Volver a la Página Principal</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core Script con Cache Buster -->
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    // Fallback asegurado para evitar cualquier problema de caché con index.php
+    if (typeof apiFetch === 'undefined' || !window.__apiFetchFixed) {
+      window.__apiFetchFixed = true;
+      const _origApiFetch = typeof apiFetch === 'function' ? apiFetch : null;
+      window.apiFetch = async function(url, options = {}) {
+        let target = url;
+        if (target.startsWith('/api/') && !target.startsWith('/api/index.php/')) {
+          target = target.replace('/api/', '/api/index.php/');
+        } else if (target === '/api' || target === '/api/') {
+          target = '/api/index.php';
+        }
+        try {
+          const res = await fetch(target, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              ...(options.headers || {})
+            },
+            ...options
+          });
+          const contentType = res.headers.get('content-type') || '';
+          const isJson = contentType.includes('application/json');
+          const data = isJson ? await res.json() : null;
+          if (!res.ok) {
+            throw new Error(data?.error || `Error del servidor (${res.status})`);
+          }
+          return data;
+        } catch (err) {
+          throw err;
+        }
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Si ya tiene sesión activa, redirigir
+      try {
+        const user = await apiFetch('/api/index.php/me');
+        if (user) {
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+          if (redirect) {
+            window.location.href = redirect;
+          } else {
+            window.location.href = user.rol === 'ADMIN' ? '/dashboard.html' : '/pacientes/registrar.html';
+          }
+        }
+      } catch (e) {
+        // No logueado
+      }
+
+      // Ver / Ocultar contraseña
+      const togglePass = document.getElementById('toggle-password');
+      const passInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eye-icon');
+
+      togglePass.onclick = () => {
+        const isPass = passInput.type === 'password';
+        passInput.type = isPass ? 'text' : 'password';
+        eyeIcon.className = isPass ? 'bx bx-hide' : 'bx bx-show';
+      };
+
+      // Formulario de login
+      const form = document.getElementById('login-form');
+      const btnSubmit = document.getElementById('btn-submit');
+      const errorAlert = document.getElementById('login-error-alert');
+      const errorText = document.getElementById('login-error-text');
+
+      form.onsubmit = async (e) => {
+        e.preventDefault();
+        errorAlert.classList.add('d-none');
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Conectando...';
+
+        const usuario = document.getElementById('usuario').value.trim();
+        const password = document.getElementById('password').value;
+
+        try {
+          const user = await apiFetch('/api/index.php/login', {
+            method: 'POST',
+            body: JSON.stringify({ usuario, password })
+          });
+
+          showToast(`¡Bienvenido de nuevo, ${user.nombre}!`, 'success');
+
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get('redirect');
+
+          setTimeout(() => {
+            if (redirect) {
+              window.location.href = redirect;
+            } else {
+              window.location.href = user.rol === 'ADMIN' ? '/dashboard.html' : '/pacientes/registrar.html';
+            }
+          }, 400);
+
+        } catch (err) {
+          errorText.textContent = err.message || 'Credenciales incorrectas o usuario inactivo.';
+          errorAlert.classList.remove('d-none');
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = '<i class="bx bx-log-in-circle fs-5"></i><span>Acceder al Sistema</span>';
+        }
+      };
+    });
+  </script>
+</body>
+</html>

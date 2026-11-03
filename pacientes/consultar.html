@@ -1,0 +1,384 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultar Pacientes · Alianza ALES & IPS</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Estilos del Sistema -->
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Vertical -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/index.html" class="brand-badge">
+          <div class="brand-badge-icon">
+            <img src="/assets/img/logo.svg" alt="Emblema ALES IPS">
+          </div>
+          <div>
+            <div class="d-flex align-items-center">
+              <span class="brand-text-ales">ALES</span>
+              <span class="brand-dot">·</span>
+              <span class="brand-text-ips">IPS</span>
+            </div>
+            <span class="brand-text-sub">Restaurando Vidas</span>
+          </div>
+        </a>
+      </div>
+
+      <nav id="sidebar-navigation" class="sidebar-nav">
+        <!-- Renderizado dinámico según rol -->
+      </nav>
+    </aside>
+
+    <!-- Contenedor Principal -->
+    <div class="main-content">
+      <!-- Navbar Superior -->
+      <header class="top-navbar">
+        <div class="d-flex align-items-center gap-2">
+          <button id="sidebar-toggle-btn" class="btn btn-outline-secondary btn-sm d-lg-none" type="button">
+            <i class="bx bx-menu fs-4"></i>
+          </button>
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold"><i class="bx bxs-heart me-1"></i>Fundación ALES</span>
+            <span class="text-muted small">✕</span>
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold"><i class="bx bxs-group me-1"></i>IPS Restaurando Vidas</span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="toggleTheme()" title="Cambiar tema">
+            <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+          </button>
+          <div id="user-profile-widget">
+            <!-- Perfil de usuario -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Cuerpo de la Página -->
+      <main class="content-body">
+        <!-- Encabezado de Página -->
+        <div class="page-header">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span id="badge-total-registros" class="badge bg-primary px-3 py-1 rounded-pill fw-bold">
+                <i class="bx bx-search me-1"></i>0 Registros Encontrados
+              </span>
+            </div>
+            <h2 class="fw-bold mb-1">Consulta de Pacientes y Atenciones</h2>
+            <p class="text-muted small mb-0">Explora el histórico centralizado de atenciones clínicas registradas con filtros avanzados y exportación.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button id="btn-exportar-vista" class="btn btn-success d-flex align-items-center gap-1 shadow-sm" onclick="exportarVistaActual()">
+              <i class="bx bxs-file-export fs-5"></i>
+              <span>Exportar Vista</span>
+            </button>
+            <a href="/pacientes/exportar.html" class="btn btn-outline-secondary d-flex align-items-center gap-1 shadow-sm">
+              <i class="bx bx-filter-alt fs-5"></i>
+              <span>Módulo de Exportación</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Panel de Filtros -->
+        <div class="card p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                <i class="bx bx-filter text-primary"></i>
+                <span>Filtros de Búsqueda</span>
+              </h5>
+              <small class="text-muted">Refina los resultados por paciente, documento, especialidad o rango de fechas</small>
+            </div>
+
+            <!-- Presets rápidos de fecha -->
+            <div class="d-flex gap-1">
+              <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onclick="aplicarPresetFecha(0)">Hoy</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onclick="aplicarPresetFecha(7)">Últimos 7 días</button>
+              <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill" onclick="aplicarPresetFecha(30)">Último mes</button>
+            </div>
+          </div>
+
+          <hr class="opacity-25 my-2">
+
+          <form id="form-filtros" class="pt-2">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="filtro-nombre" class="form-label small fw-semibold">Nombre del Paciente</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-user"></i></span>
+                  <input type="text" id="filtro-nombre" class="form-control" placeholder="Ej. Carlos Pérez">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="filtro-cedula" class="form-label small fw-semibold">Cédula de Ciudadanía</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-id-card"></i></span>
+                  <input type="text" id="filtro-cedula" class="form-control" placeholder="Ej. 1098...">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="filtro-especialidad" class="form-label small fw-semibold">Especialidad Médica</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-pulse"></i></span>
+                  <select id="filtro-especialidad" class="form-select">
+                    <option value="">Todas las disciplinas</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="filtro-profesional" class="form-label small fw-semibold">Profesional en Salud</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-user-pin"></i></span>
+                  <input type="text" id="filtro-profesional" class="form-control" placeholder="Ej. Dra. Valeria">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="filtro-desde" class="form-label small fw-semibold">Fecha Desde</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-calendar"></i></span>
+                  <input type="date" id="filtro-desde" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label for="filtro-hasta" class="form-label small fw-semibold">Fecha Hasta</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-body-tertiary"><i class="bx bx-calendar-check"></i></span>
+                  <input type="date" id="filtro-hasta" class="form-control">
+                </div>
+              </div>
+
+              <div class="col-12 d-flex gap-2 pt-2">
+                <button type="submit" id="btn-aplicar-filtros" class="btn btn-primary d-flex align-items-center gap-1 shadow-sm">
+                  <i class="bx bx-search"></i>
+                  <span>Aplicar Filtros</span>
+                </button>
+                <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-1" onclick="limpiarFiltros()">
+                  <i class="bx bx-eraser"></i>
+                  <span>Limpiar</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tabla de Resultados -->
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Historial de Atenciones</h5>
+              <small class="text-muted">Visualización detallada de los registros médicos coincidentes</small>
+            </div>
+            <span id="tabla-contador-chip" class="badge bg-primary bg-opacity-10 text-primary fw-bold">0 resultados</span>
+          </div>
+
+          <hr class="opacity-25 my-2">
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-muted small text-uppercase">
+                  <th>Paciente</th>
+                  <th>Cédula</th>
+                  <th>Contacto</th>
+                  <th>Especialidad</th>
+                  <th>Profesional</th>
+                  <th>Fecha de Atención</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-pacientes-body">
+                <tr>
+                  <td colspan="6" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <div class="text-muted small mt-2">Cargando pacientes...</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core Script -->
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    const coloresEspecialidades = {
+      Psiquiatria: 'purple',
+      TerapiaOcupacional: 'warning',
+      Psicologia: 'info',
+      TrabajoSocial: 'success',
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = await requireUserAuth('ADMIN');
+      if (!user) return;
+
+      renderAppLayout(user, 'consultar');
+
+      // Cargar catálogo de especialidades para el select
+      try {
+        const cat = await apiFetch('/api/catalogos');
+        const selEsp = document.getElementById('filtro-especialidad');
+        if (cat?.especialidades) {
+          cat.especialidades.forEach(e => {
+            const opt = document.createElement('option');
+            opt.value = e.value;
+            opt.textContent = e.title;
+            selEsp.appendChild(opt);
+          });
+        }
+      } catch (e) {
+        // Ignorar
+      }
+
+      // Buscar pacientes
+      document.getElementById('form-filtros').onsubmit = (e) => {
+        e.preventDefault();
+        buscarPacientes();
+      };
+
+      await buscarPacientes();
+    });
+
+    function getFiltrosQuery() {
+      const params = new URLSearchParams();
+      const nombre = document.getElementById('filtro-nombre').value.trim();
+      const cedula = document.getElementById('filtro-cedula').value.trim();
+      const especialidad = document.getElementById('filtro-especialidad').value;
+      const profesional = document.getElementById('filtro-profesional').value.trim();
+      const fechaDesde = document.getElementById('filtro-desde').value;
+      const fechaHasta = document.getElementById('filtro-hasta').value;
+
+      if (nombre) params.set('nombre', nombre);
+      if (cedula) params.set('cedula', cedula);
+      if (especialidad) params.set('especialidad', especialidad);
+      if (profesional) params.set('profesional', profesional);
+      if (fechaDesde) params.set('fechaDesde', fechaDesde);
+      if (fechaHasta) params.set('fechaHasta', fechaHasta);
+
+      return params.toString() ? `?${params.toString()}` : '';
+    }
+
+    async function buscarPacientes() {
+      const tbody = document.getElementById('tabla-pacientes-body');
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="6" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <div class="text-muted small mt-2">Buscando atenciones...</div>
+          </td>
+        </tr>
+      `;
+
+      try {
+        const data = await apiFetch(`/api/pacientes${getFiltrosQuery()}`);
+        const lista = data?.pacientes || [];
+
+        document.getElementById('badge-total-registros').innerHTML = `<i class="bx bx-search me-1"></i>${lista.length} Registros Encontrados`;
+        document.getElementById('tabla-contador-chip').textContent = `${lista.length} resultados`;
+
+        if (lista.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center py-5">
+                <i class="bx bx-search-alt text-muted fs-1 mb-2 d-block opacity-50"></i>
+                <h6 class="fw-bold mb-1">No se encontraron registros</h6>
+                <p class="text-muted small mb-3">No hay atenciones que coincidan con los criterios de búsqueda seleccionados.</p>
+                <button class="btn btn-outline-primary btn-sm" onclick="limpiarFiltros()">Limpiar Filtros</button>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = lista.map(p => {
+          const inits = escapeHtml(p.nombreCompleto.split(' ').slice(0, 2).map(n => n[0]).join('').toUpperCase());
+          const col = coloresEspecialidades[p.especialidad] || 'primary';
+
+          return `
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  <div class="avatar-circle" style="width: 38px; height: 38px; font-size: 0.85rem;">${inits}</div>
+                  <div>
+                    <div class="fw-bold">${escapeHtml(p.nombreCompleto)}</div>
+                    <div class="text-muted small">ID #${p.id}</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="font-monospace fw-semibold">${escapeHtml(p.cedula)}</span></td>
+              <td>
+                ${p.telefono ? `<span class="small d-inline-flex align-items-center gap-1"><i class="bx bx-phone text-primary"></i>${escapeHtml(p.telefono)}</span>` : '<span class="text-muted small fst-italic">No registrado</span>'}
+              </td>
+              <td>
+                <span class="badge bg-${col} bg-opacity-15 text-${col} fw-semibold">${escapeHtml(p.especialidadTexto || p.especialidad)}</span>
+              </td>
+              <td><span class="fw-medium small">${escapeHtml(p.profesional)}</span></td>
+              <td><span class="text-muted small">${escapeHtml(p.fechaAtencionTexto)}</span></td>
+            </tr>
+          `;
+        }).join('');
+
+      } catch (err) {
+        showToast(err.message || 'Error al buscar pacientes.', 'error');
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="text-center py-4 text-danger">
+              <i class="bx bx-error-circle fs-3 mb-1 d-block"></i>
+              ${escapeHtml(err.message || 'Error al cargar los datos.')}
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function limpiarFiltros() {
+      document.getElementById('filtro-nombre').value = '';
+      document.getElementById('filtro-cedula').value = '';
+      document.getElementById('filtro-especialidad').value = '';
+      document.getElementById('filtro-profesional').value = '';
+      document.getElementById('filtro-desde').value = '';
+      document.getElementById('filtro-hasta').value = '';
+      buscarPacientes();
+    }
+
+    function aplicarPresetFecha(dias) {
+      const hoy = new Date();
+      const desde = new Date();
+      desde.setDate(hoy.getDate() - dias);
+
+      document.getElementById('filtro-desde').value = desde.toISOString().slice(0, 10);
+      document.getElementById('filtro-hasta').value = hoy.toISOString().slice(0, 10);
+      buscarPacientes();
+    }
+
+    function exportarVistaActual() {
+      const query = getFiltrosQuery();
+      const sep = query ? '&' : '?';
+      window.location.href = `${appUrl('/exportar.php')}${query}${sep}descargar=1`;
+    }
+  </script>
+</body>
+</html>

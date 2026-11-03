@@ -1,0 +1,39 @@
+﻿# ====================================================================
+# CONFIGURACIÓN APACHE / HOSTINGER / LARAGON / XAMPP
+# Sistema de Registro Clínico de Pacientes
+# ====================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # 1. Enrutamiento automático de API
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+    # 2. Descarga de exportación directa
+    RewriteRule ^exportar$ exportar.php [QSA,L]
+</IfModule>
+
+# 3. Seguridad: Bloquear acceso a archivos sensibles y de configuración
+<FilesMatch "\.(env|sql|md|json|lock|bak)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 4. Proteger directorio includes
+<IfModule mod_rewrite.c>
+    RewriteRule ^includes/ - [F,L]
+</IfModule>
+
+# 5. Cabeceras de seguridad
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

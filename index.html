@@ -1,0 +1,590 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alianza ALES & IPS Restaurando Vidas · Atención Integral en Salud Mental</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <!-- Estilos del Sistema -->
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+  <style>
+    /* Estilos Landing Page */
+    .landing-navbar {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 30px);
+      max-width: 1200px;
+      background: rgba(18, 24, 38, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 10px 24px;
+      z-index: 1050;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+    [data-bs-theme="light"] .landing-navbar {
+      background: rgba(255, 255, 255, 0.88);
+    }
+    .hero-section {
+      padding-top: 140px;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow-1 {
+      position: absolute;
+      top: 5%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      top: 20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 164, 93, 0.15) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .hero-title {
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .hero-highlight {
+      background: linear-gradient(135deg, #00E5FF 0%, #00E676 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .feature-card {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+    .specialty-icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar Flotante Glassmorphism -->
+  <header class="landing-navbar d-flex align-items-center justify-content-between">
+    <a href="#hero" class="d-flex align-items-center gap-2 text-decoration-none">
+      <div class="bg-white p-1 rounded-2 border d-flex align-items-center" style="height: 38px;">
+        <img src="/assets/img/logo-ales.png" alt="Fundación ALES" style="height: 28px; max-width: 80px; object-fit: contain;">
+      </div>
+      <span class="fw-bold text-muted">✕</span>
+      <div class="bg-white p-1 rounded-2 border d-flex align-items-center" style="height: 38px;">
+        <img src="/assets/img/logo-ips.png" alt="IPS Restaurando Vidas" style="height: 28px; max-width: 90px; object-fit: contain;">
+      </div>
+      <div class="d-none d-lg-block ms-2 border-start ps-2">
+        <div class="fw-bold small text-main">Alianza ALES &amp; Restaurando Vidas</div>
+        <div class="text-muted" style="font-size: 0.72rem;">Atención Integral en Salud Mental</div>
+      </div>
+    </a>
+
+    <div class="d-none d-md-flex align-items-center gap-3">
+      <a href="#alianza" class="text-decoration-none text-muted fw-medium px-2 py-1">Alianza</a>
+      <a href="#entidades" class="text-decoration-none text-muted fw-medium px-2 py-1">Entidades</a>
+      <a href="#especialidades" class="text-decoration-none text-muted fw-medium px-2 py-1">Especialidades</a>
+      <a href="#sedes" class="text-decoration-none text-muted fw-medium px-2 py-1">Sedes</a>
+      <a href="#valores" class="text-decoration-none text-muted fw-medium px-2 py-1">Valores</a>
+    </div>
+
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;" onclick="toggleTheme()" title="Cambiar tema">
+        <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+      </button>
+      <a id="btn-portal-header" href="/login.html" class="btn btn-primary btn-sm rounded-pill px-3 fw-bold d-flex align-items-center gap-1 shadow-sm">
+        <i class="bx bx-log-in-circle fs-5"></i>
+        <span>Iniciar Sesión</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="container">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-7 text-center text-lg-start">
+          <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 mb-3 fw-semibold small">
+            <span class="rounded-circle bg-primary" style="width: 8px; height: 8px;"></span>
+            <span>Alianza Estratégica Oficial por la Vida y la Salud Mental</span>
+          </div>
+
+          <h1 class="hero-title mb-4">
+            Amor, Luz y Esperanza para <br class="d-none d-lg-block">
+            <span class="hero-highlight">Restaurar Vidas</span>
+          </h1>
+
+          <p class="lead text-muted mb-4 pe-lg-4">
+            Una sinergia única entre la vocación social y humana de la <strong>Fundación ALES</strong> y la excelencia médica especializada de la <strong>IPS Restaurando Vidas</strong>. Cuidamos cada aspecto de la salud mental y el bienestar integral de nuestra comunidad.
+          </p>
+
+          <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start mb-5">
+            <a id="btn-portal-hero" href="/login.html" class="btn btn-primary btn-lg rounded-pill px-4 py-3 fw-bold shadow-lg d-flex align-items-center gap-2">
+              <i class="bx bx-log-in fs-4"></i>
+              <span>Acceso al Portal Clínico</span>
+            </a>
+            <a href="#alianza" class="btn btn-outline-secondary btn-lg rounded-pill px-4 py-3 fw-semibold d-flex align-items-center gap-2">
+              <i class="bx bx-info-circle fs-4"></i>
+              <span>Conocer la Alianza</span>
+            </a>
+          </div>
+
+          <!-- Métricas del Hero -->
+          <div class="d-flex flex-wrap gap-4 justify-content-center justify-content-lg-start border-top pt-4">
+            <div>
+              <div id="stat-atenciones" class="h3 fw-bold text-primary mb-0">100+</div>
+              <div class="text-muted small">Atenciones Brindadas</div>
+            </div>
+            <div class="vr opacity-25 d-none d-sm-block"></div>
+            <div>
+              <div id="stat-profesionales" class="h3 fw-bold text-success mb-0">4+</div>
+              <div class="text-muted small">Especialistas Activos</div>
+            </div>
+            <div class="vr opacity-25 d-none d-sm-block"></div>
+            <div>
+              <div id="stat-sedes" class="h3 fw-bold text-warning mb-0">3</div>
+              <div class="text-muted small">Sedes Integradas</div>
+            </div>
+            <div class="vr opacity-25 d-none d-sm-block"></div>
+            <div>
+              <div class="h3 fw-bold text-info mb-0">100%</div>
+              <div class="text-muted small">Enfoque Humano</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta Alianza -->
+        <div class="col-lg-5">
+          <div class="card p-4 border-0 shadow-lg position-relative" style="background: rgba(18, 24, 38, 0.95); border: 1px solid rgba(0, 229, 255, 0.3) !important;">
+            <div class="text-center mb-4">
+              <div class="d-flex align-items-center justify-content-center gap-3 mb-3">
+                <div class="bg-white p-2 rounded-3 border">
+                  <img src="/assets/img/logo-ales.png" alt="ALES" style="height: 38px; max-width: 100px; object-fit: contain;">
+                </div>
+                <span class="fs-4 text-muted fw-bold">+</span>
+                <div class="bg-white p-2 rounded-3 border">
+                  <img src="/assets/img/logo-ips.png" alt="IPS" style="height: 38px; max-width: 100px; object-fit: contain;">
+                </div>
+              </div>
+              <h4 class="fw-bold mb-1">Modelo de Cuidado Integral</h4>
+              <p class="text-muted small mb-0">Plataforma Centralizada de Gestión y Registro Clínico</p>
+            </div>
+
+            <hr class="opacity-25">
+
+            <div class="d-flex flex-column gap-3 mb-4">
+              <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(168, 85, 247, 0.1);">
+                <div class="rounded-3 p-2 text-white" style="background: #A855F7;">
+                  <i class="bx bx-heart fs-4"></i>
+                </div>
+                <div>
+                  <div class="fw-bold" style="color: #C084FC;">Fundación ALES</div>
+                  <div class="text-muted small">Amor, Luz y Esperanza para la niñez, juventud y familias.</div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(0, 229, 255, 0.1);">
+                <div class="rounded-3 p-2 text-white" style="background: #0284C7;">
+                  <i class="bx bx-pulse fs-4"></i>
+                </div>
+                <div>
+                  <div class="fw-bold" style="color: #38BDF8;">IPS Restaurando Vidas</div>
+                  <div class="text-muted small">Atención clínica de alta especialidad en salud mental.</div>
+                </div>
+              </div>
+
+              <div class="d-flex align-items-center gap-3 p-3 rounded-3" style="background: rgba(34, 164, 93, 0.1);">
+                <div class="rounded-3 p-2 text-white" style="background: #22A45D;">
+                  <i class="bx bx-check-shield fs-4"></i>
+                </div>
+                <div>
+                  <div class="fw-bold" style="color: #34D399;">Registro Clínico Seguro</div>
+                  <div class="text-muted small">Control por sedes, trazabilidad médica y confidencialidad.</div>
+                </div>
+              </div>
+            </div>
+
+            <a href="/login.html" class="btn btn-outline-primary w-100 rounded-pill py-2 fw-semibold d-flex align-items-center justify-content-center gap-2">
+              <i class="bx bx-log-in-circle"></i>
+              <span>Ingresar al Sistema</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Alianza -->
+  <section id="alianza" class="py-5 bg-body-tertiary">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Unión Estratégica</span>
+        <h2 class="fw-bold">Una Alianza Nacida para Transformar Vidas</h2>
+        <p class="text-muted">La convergencia de dos instituciones comprometidas con la salud mental, el desarrollo humano y la restitución social en Colombia.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 p-4 text-center feature-card">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; background: rgba(168, 85, 247, 0.15); color: #A855F7;">
+              <i class="bx bx-heart fs-2"></i>
+            </div>
+            <h4 class="fw-bold mb-2">Vocación Humana</h4>
+            <p class="text-muted mb-0">Acompañamiento cercano, afectivo y empático a personas y familias en situaciones de alta vulnerabilidad psicosocial.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 p-4 text-center feature-card">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; background: rgba(0, 229, 255, 0.15); color: #00E5FF;">
+              <i class="bx bx-dna fs-2"></i>
+            </div>
+            <h4 class="fw-bold mb-2">Rigor Clínico</h4>
+            <p class="text-muted mb-0">Protocolos médicos científicos de vanguardia con especialistas en Psiquiatría, Terapia Ocupacional, Psicología y Trabajo Social.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 p-4 text-center feature-card">
+            <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 70px; height: 70px; background: rgba(255, 145, 0, 0.15); color: #FF9100;">
+              <i class="bx bx-refresh fs-2"></i>
+            </div>
+            <h4 class="fw-bold mb-2">Restauración Total</h4>
+            <p class="text-muted mb-0">Buscamos no solo el alivio de los síntomas, sino la reconstrucción del proyecto de vida y la reintegración a la sociedad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Entidades -->
+  <section id="entidades" class="py-5">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-secondary bg-opacity-10 text-secondary px-3 py-2 rounded-pill fw-bold mb-2">Nuestras Instituciones</span>
+        <h2 class="fw-bold">Dos Vocaciones, Un Solo Propósito</h2>
+        <p class="text-muted">Conoce la identidad y el papel complementario de cada una de las entidades aliadas.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Fundación ALES -->
+        <div class="col-md-6">
+          <div class="card h-100 p-4 border-primary border-opacity-25 feature-card">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="bg-white p-2 rounded-3 border">
+                <img src="/assets/img/logo-ales.png" alt="Fundación ALES" style="height: 48px; max-width: 140px; object-fit: contain;">
+              </div>
+              <div>
+                <h3 class="fw-bold text-primary mb-1">Fundación ALES</h3>
+                <div class="text-success small fw-bold text-uppercase">Amor, Luz y Esperanza</div>
+              </div>
+            </div>
+
+            <p class="text-muted mb-4">
+              La <strong>Fundación ALES</strong> es una organización con una profunda vocación social, fundada para ser faro y refugio de esperanza. Su trabajo se enfoca en el rescate afectivo, el acompañamiento continuo y la dignificación de niños, adolescentes y familias en situaciones de vulnerabilidad.
+            </p>
+
+            <ul class="list-unstyled mb-4 d-flex flex-column gap-2 text-muted">
+              <li><i class="bx bx-check-circle text-primary me-2"></i><strong>Amor:</strong> Acogida incondicional y calidez humana en cada contacto.</li>
+              <li><i class="bx bx-check-circle text-primary me-2"></i><strong>Luz:</strong> Guía y orientación en momentos de incertidumbre y crisis.</li>
+              <li><i class="bx bx-check-circle text-primary me-2"></i><strong>Esperanza:</strong> Certeza de que toda vida puede ser renovada y florecer.</li>
+            </ul>
+
+            <div class="d-flex flex-wrap gap-2 mt-auto">
+              <span class="badge bg-primary">Apoyo Psicosocial</span>
+              <span class="badge bg-primary bg-opacity-25 text-primary">Desarrollo Humano</span>
+              <span class="badge bg-primary bg-opacity-25 text-primary">Comunidad y Familia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- IPS Restaurando Vidas -->
+        <div class="col-md-6">
+          <div class="card h-100 p-4 border-info border-opacity-25 feature-card">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="bg-white p-2 rounded-3 border">
+                <img src="/assets/img/logo-ips.png" alt="IPS Restaurando Vidas" style="height: 48px; max-width: 140px; object-fit: contain;">
+              </div>
+              <div>
+                <h3 class="fw-bold text-info mb-1">IPS Restaurando Vidas</h3>
+                <div class="text-primary small fw-bold text-uppercase">Salud Mental y Bienestar Integral</div>
+              </div>
+            </div>
+
+            <p class="text-muted mb-4">
+              <strong>IPS Restaurando Vidas</strong> es una Institución Prestadora de Servicios de Salud debidamente habilitada, especializada en la prevención, diagnóstico, tratamiento y rehabilitación de trastornos de salud mental y del comportamiento, con personal médico certificado y sedes adaptadas.
+            </p>
+
+            <ul class="list-unstyled mb-4 d-flex flex-column gap-2 text-muted">
+              <li><i class="bx bx-check-circle text-info me-2"></i><strong>Excelencia Médica:</strong> Profesionales certificados en diversas disciplinas.</li>
+              <li><i class="bx bx-check-circle text-info me-2"></i><strong>Enfoque Clínico:</strong> Evaluaciones basadas en guías de práctica médica.</li>
+              <li><i class="bx bx-check-circle text-info me-2"></i><strong>Rehabilitación Integral:</strong> Terapia funcional para la reinserción social.</li>
+            </ul>
+
+            <div class="d-flex flex-wrap gap-2 mt-auto">
+              <span class="badge bg-info text-dark">Habilitación en Salud</span>
+              <span class="badge bg-info bg-opacity-25 text-info">Psiquiatría y Terapia</span>
+              <span class="badge bg-info bg-opacity-25 text-info">Atención por Sedes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Especialidades -->
+  <section id="especialidades" class="py-5 bg-body-tertiary">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold mb-2">Disciplinas Asistenciales</span>
+        <h2 class="fw-bold">Especialidades que Transforman</h2>
+        <p class="text-muted">Nuestros profesionales de la salud trabajan coordinadamente para garantizar un abordaje integral de cada paciente.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 feature-card">
+            <div class="specialty-icon-box" style="background: rgba(168, 85, 247, 0.15); color: #A855F7;">
+              <i class="bx bx-brain"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Psiquiatría Clínica</h5>
+            <p class="text-muted small mb-3">Evaluación médica diagnóstica, psicofarmacología especializada y estabilización en crisis de alta complejidad.</p>
+            <ul class="list-unstyled small text-muted mb-0">
+              <li><i class="bx bx-check text-purple me-1"></i> Diagnóstico especializado</li>
+              <li><i class="bx bx-check text-purple me-1"></i> Manejo psicofarmacológico</li>
+              <li><i class="bx bx-check text-purple me-1"></i> Estabilización en crisis</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 feature-card">
+            <div class="specialty-icon-box" style="background: rgba(255, 145, 0, 0.15); color: #FF9100;">
+              <i class="bx bx-accessibility"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Terapia Ocupacional</h5>
+            <p class="text-muted small mb-3">Rehabilitación funcional, desarrollo neurosensorial y adaptación para la máxima autonomía e independencia del paciente.</p>
+            <ul class="list-unstyled small text-muted mb-0">
+              <li><i class="bx bx-check text-warning me-1"></i> Independencia diaria</li>
+              <li><i class="bx bx-check text-warning me-1"></i> Estimulación neurosensorial</li>
+              <li><i class="bx bx-check text-warning me-1"></i> Inclusión laboral y educativa</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 feature-card">
+            <div class="specialty-icon-box" style="background: rgba(0, 229, 255, 0.15); color: #00E5FF;">
+              <i class="bx bx-heart"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Psicología Clínica</h5>
+            <p class="text-muted small mb-3">Psicoterapia individual, de pareja y familiar basada en evidencia para gestión emocional, trauma y resiliencia.</p>
+            <ul class="list-unstyled small text-muted mb-0">
+              <li><i class="bx bx-check text-info me-1"></i> Terapia cognitivo-conductual</li>
+              <li><i class="bx bx-check text-info me-1"></i> Duelo y trauma</li>
+              <li><i class="bx bx-check text-info me-1"></i> Salud mental familiar</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 feature-card">
+            <div class="specialty-icon-box" style="background: rgba(0, 230, 118, 0.15); color: #00E676;">
+              <i class="bx bx-group"></i>
+            </div>
+            <h5 class="fw-bold mb-2">Trabajo Social</h5>
+            <p class="text-muted small mb-3">Intervención sociofamiliar, articulación comunitaria y restitución de derechos para el bienestar integral del núcleo familiar.</p>
+            <ul class="list-unstyled small text-muted mb-0">
+              <li><i class="bx bx-check text-success me-1"></i> Restitución de derechos</li>
+              <li><i class="bx bx-check text-success me-1"></i> Redes de apoyo comunitario</li>
+              <li><i class="bx bx-check text-success me-1"></i> Soporte sociofamiliar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Sedes -->
+  <section id="sedes" class="py-5">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2 rounded-pill fw-bold mb-2">Red Asistencial</span>
+        <h2 class="fw-bold">Nuestras Sedes de Atención</h2>
+        <p class="text-muted">Espacios habilitados con altos estándares de confort y calidez para nuestros pacientes.</p>
+      </div>
+
+      <div id="sedes-container" class="row g-4 justify-content-center">
+        <!-- Renderizado dinámico de sedes -->
+        <div class="col-12 text-center py-4">
+          <div class="spinner-border text-primary" role="status"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección: Valores / Pilares -->
+  <section id="valores" class="py-5 bg-body-tertiary">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold mb-2">Principios Rectores</span>
+        <h2 class="fw-bold">Nuestros Valores Fundamentales</h2>
+        <p class="text-muted">Los pilares éticos y humanos que orientan cada atención clínica.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 border-0 shadow-sm text-center">
+            <i class="bx bx-shield-quarter text-primary fs-1 mb-3"></i>
+            <h5 class="fw-bold">Atención Humanizada</h5>
+            <p class="text-muted small mb-0">Cada persona es atendida con empatía, compasión y respeto absoluto a su dignidad humana.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 border-0 shadow-sm text-center">
+            <i class="bx bx-git-merge text-info fs-1 mb-3"></i>
+            <h5 class="fw-bold">Enfoque Interdisciplinario</h5>
+            <p class="text-muted small mb-0">Médicos, terapeutas y trabajadores sociales articulados en un solo expediente de evolución.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 border-0 shadow-sm text-center">
+            <i class="bx bx-check-double text-success fs-1 mb-3"></i>
+            <h5 class="fw-bold">Seguridad y Privacidad</h5>
+            <p class="text-muted small mb-0">Custodia estricta de la información clínica bajo los más altos estándares de reserva médica.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 p-4 border-0 shadow-sm text-center">
+            <i class="bx bx-sun text-warning fs-1 mb-3"></i>
+            <h5 class="fw-bold">Esperanza y Transformación</h5>
+            <p class="text-muted small mb-0">Guiamos a cada paciente hacia su recuperación y reintegración armónica con su comunidad.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-5 border-top bg-body">
+    <div class="container text-center">
+      <div class="d-flex justify-content-center align-items-center gap-3 mb-3">
+        <img src="/assets/img/logo-ales.png" alt="Fundación ALES" style="height: 32px; max-width: 100px; object-fit: contain;">
+        <span class="text-muted fw-bold">✕</span>
+        <img src="/assets/img/logo-ips.png" alt="IPS Restaurando Vidas" style="height: 32px; max-width: 110px; object-fit: contain;">
+      </div>
+      <p class="text-muted small mb-1">
+        Alianza Estratégica Oficial Fundación ALES &amp; IPS Restaurando Vidas · Colombia
+      </p>
+      <p class="text-muted small mb-0">
+        Sistema Seguro de Registro Clínico y Evolución de Pacientes &copy; 2026. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core Script -->
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Verificar si ya está logueado para ajustar botones
+      try {
+        const user = await apiFetch('/api/me');
+        if (user) {
+          const targetUrl = user.rol === 'ADMIN' ? '/dashboard.html' : '/pacientes/registrar.html';
+          const btnHeader = document.getElementById('btn-portal-header');
+          const btnHero = document.getElementById('btn-portal-hero');
+          if (btnHeader) {
+            btnHeader.href = targetUrl;
+            btnHeader.innerHTML = '<i class="bx bx-user-circle fs-5"></i><span>Mi Portal</span>';
+          }
+          if (btnHero) {
+            btnHero.href = targetUrl;
+            btnHero.innerHTML = '<i class="bx bx-layout fs-4"></i><span>Ingresar a mi Panel</span>';
+          }
+        }
+      } catch (e) {
+        // No logueado, mantener por defecto
+      }
+
+      // Cargar información pública desde la API
+      try {
+        const data = await apiFetch('/api/publico/info');
+        if (data) {
+          if (data.totalAtenciones !== undefined) {
+            document.getElementById('stat-atenciones').textContent = data.totalAtenciones + '+';
+          }
+          if (data.totalProfesionales !== undefined) {
+            document.getElementById('stat-profesionales').textContent = data.totalProfesionales;
+          }
+          if (data.sedes) {
+            document.getElementById('stat-sedes').textContent = data.sedes.length;
+            renderSedes(data.sedes);
+          }
+        }
+      } catch (e) {
+        // Fallback de sedes si la API no responde
+        renderSedes([
+          { id: 1, nombre: 'Sede Principal' },
+          { id: 2, nombre: 'Sede Norte' },
+          { id: 3, nombre: 'Sede Bienestar' }
+        ]);
+      }
+    });
+
+    function renderSedes(sedes) {
+      const cont = document.getElementById('sedes-container');
+      if (!cont) return;
+
+      cont.innerHTML = sedes.map(s => `
+        <div class="col-md-4">
+          <div class="card h-100 p-4 border-0 shadow-sm text-center feature-card">
+            <div class="rounded-4 p-3 mb-3 mx-auto d-inline-flex align-items-center justify-content-center" style="background: rgba(255, 145, 0, 0.1); color: #FF9100; width: 64px; height: 64px;">
+              <i class="bx bx-buildings fs-1"></i>
+            </div>
+            <h5 class="fw-bold mb-2">${s.nombre}</h5>
+            <p class="text-muted small mb-0">Sede Autorizada y Habilitada para Atención en Consulta Externa y Terapia Integral.</p>
+          </div>
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

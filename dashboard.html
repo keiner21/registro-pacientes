@@ -1,0 +1,501 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Administrativo · Alianza ALES & IPS</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- ApexCharts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Estilos del Sistema -->
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+</head>
+<body>
+
+  <div class="sidebar-backdrop"></div>
+
+  <div class="app-wrapper">
+    <!-- Sidebar Vertical -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/index.html" class="brand-badge">
+          <div class="brand-badge-icon">
+            <img src="/assets/img/logo.svg" alt="Emblema ALES IPS">
+          </div>
+          <div>
+            <div class="d-flex align-items-center">
+              <span class="brand-text-ales">ALES</span>
+              <span class="brand-dot">·</span>
+              <span class="brand-text-ips">IPS</span>
+            </div>
+            <span class="brand-text-sub">Restaurando Vidas</span>
+          </div>
+        </a>
+      </div>
+
+      <nav id="sidebar-navigation" class="sidebar-nav">
+        <!-- Renderizado dinámico según rol -->
+      </nav>
+    </aside>
+
+    <!-- Contenedor Principal -->
+    <div class="main-content">
+      <!-- Navbar Superior -->
+      <header class="top-navbar">
+        <div class="d-flex align-items-center gap-2">
+          <button id="sidebar-toggle-btn" class="btn btn-outline-secondary btn-sm d-lg-none" type="button">
+            <i class="bx bx-menu fs-4"></i>
+          </button>
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold"><i class="bx bxs-heart me-1"></i>Fundación ALES</span>
+            <span class="text-muted small">✕</span>
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold"><i class="bx bxs-group me-1"></i>IPS Restaurando Vidas</span>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="toggleTheme()" title="Cambiar tema">
+            <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+          </button>
+          <div id="user-profile-widget">
+            <!-- Widget de usuario con foto/iniciales y dropdown -->
+          </div>
+        </div>
+      </header>
+
+      <!-- Cuerpo de la Página -->
+      <main class="content-body">
+        <!-- Encabezado de Página -->
+        <div class="page-header">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span class="badge bg-primary px-3 py-1 rounded-pill fw-bold"><i class="bx bx-shield-quarter me-1"></i>Administración Activa</span>
+            </div>
+            <h2 class="fw-bold mb-1">Panel de Control Administrativo</h2>
+            <p class="text-muted small mb-0">Supervisión clínica, gestión de personal, sedes de atención e indicadores en tiempo real.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button id="btn-refresh" class="btn btn-outline-secondary d-flex align-items-center gap-1 shadow-sm" onclick="cargarDatos(true)">
+              <i class="bx bx-refresh fs-5"></i>
+              <span>Actualizar Datos</span>
+            </button>
+            <a href="/pacientes/consultar.html" class="btn btn-primary d-flex align-items-center gap-1 shadow-sm">
+              <i class="bx bx-folder-open fs-5"></i>
+              <span>Explorar Registros</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Banner de Bienvenida -->
+        <div class="page-hero">
+          <div class="row align-items-center">
+            <div class="col-md-9">
+              <span id="user-role-badge" class="badge bg-white text-primary fw-bold mb-2">Administrador General</span>
+              <span id="current-date-text" class="text-white opacity-75 small ms-2"></span>
+              <h2 id="welcome-message" class="fw-bold text-white mb-2">¡Bienvenido! 👋</h2>
+              <p class="text-white opacity-90 mb-0">
+                La plataforma integra el registro y evolución de pacientes para la alianza entre la <strong>Fundación ALES</strong> y la <strong>IPS Restaurando Vidas</strong>.
+              </p>
+            </div>
+            <div class="col-md-3 text-end d-none d-md-block">
+              <i class="bx bx-pulse text-white opacity-25" style="font-size: 5rem;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPIs con StatCards -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-lg-4">
+            <div class="card stat-card p-4">
+              <div class="stat-glow" style="background: radial-gradient(circle, #1A78C2 0%, transparent 70%);"></div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-avatar bg-primary bg-opacity-10 text-primary">
+                  <i class="bx bx-group"></i>
+                </div>
+                <span class="badge bg-success bg-opacity-10 text-success fw-bold small"><i class="bx bx-trending-up me-1"></i>Total General</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Volumen Total</div>
+              <div id="kpi-total-pacientes" class="display-6 fw-bold text-primary mb-1">...</div>
+              <div class="text-muted small">Atenciones registradas en el sistema</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-4">
+            <div class="card stat-card p-4">
+              <div class="stat-glow" style="background: radial-gradient(circle, #22A45D 0%, transparent 70%);"></div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-avatar bg-success bg-opacity-10 text-success">
+                  <i class="bx bx-user-check"></i>
+                </div>
+                <span class="badge bg-success bg-opacity-10 text-success fw-bold small"><i class="bx bx-badge-check me-1"></i>Personal Clínico</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Talento Humano</div>
+              <div id="kpi-total-profesionales" class="display-6 fw-bold text-success mb-1">...</div>
+              <div class="text-muted small">Profesionales activos en sedes</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-4">
+            <div class="card stat-card p-4">
+              <div class="stat-glow" style="background: radial-gradient(circle, #FF9100 0%, transparent 70%);"></div>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="stat-avatar bg-warning bg-opacity-10 text-warning">
+                  <i class="bx bx-calendar-check"></i>
+                </div>
+                <span class="badge bg-warning bg-opacity-10 text-warning fw-bold small"><i class="bx bx-time-five me-1"></i>Jornada Actual</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Atenciones Hoy</div>
+              <div id="kpi-atenciones-hoy" class="display-6 fw-bold text-warning mb-1">...</div>
+              <div class="text-muted small">Consultas ingresadas durante la fecha</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico de Donut y Desglose por Área -->
+        <div class="row g-4 mb-4">
+          <div class="col-lg-5">
+            <div class="card h-100 p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h5 class="fw-bold mb-0">Distribución por Especialidad</h5>
+                  <small class="text-muted">Proporción de consultas brindadas</small>
+                </div>
+                <span id="chart-total-chip" class="badge bg-primary bg-opacity-10 text-primary fw-bold">Total: 0</span>
+              </div>
+              <hr class="opacity-25 my-2">
+              <div id="apex-donut-chart" class="d-flex align-items-center justify-content-center py-2" style="min-height: 300px;">
+                <div class="spinner-border text-primary" role="status"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="card h-100 p-4">
+              <div class="mb-3">
+                <h5 class="fw-bold mb-0">Atenciones por Área Médica</h5>
+                <small class="text-muted">Desglose cuantitativo y porcentual por disciplina</small>
+              </div>
+              <hr class="opacity-25 my-2">
+              <div id="areas-progress-container" class="py-2">
+                <!-- Se inyectan barras de progreso -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sedes IPS -->
+        <div class="card p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                <i class="bx bx-buildings text-secondary"></i>
+                <span>Atenciones por Sede IPS</span>
+              </h5>
+              <small class="text-muted">Distribución de consultas según la sede autorizada de atención</small>
+            </div>
+            <a href="/ips/index.html" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+              <i class="bx bx-cog"></i>
+              <span>Gestionar Sedes IPS</span>
+            </a>
+          </div>
+          <hr class="opacity-25 my-2">
+          <div id="ips-venues-container" class="row g-3 pt-2">
+            <!-- Sedes con tarjetas y barra -->
+          </div>
+        </div>
+
+        <!-- Acciones Rápidas -->
+        <div class="mb-3">
+          <h5 class="fw-bold d-flex align-items-center gap-2">
+            <i class="bx bx-bolt-circle text-primary"></i>
+            <span>Acciones Rápidas</span>
+          </h5>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-sm-6 col-lg-3">
+            <a href="/ips/index.html" class="card h-100 p-3 text-decoration-none text-main feature-card">
+              <div class="stat-avatar bg-warning bg-opacity-10 text-warning mb-3">
+                <i class="bx bx-building-house"></i>
+              </div>
+              <h6 class="fw-bold mb-1">Gestión de IPS</h6>
+              <p class="text-muted small mb-3 flex-grow-1">Crear, activar/desactivar y supervisar sedes de atención médica asociadas.</p>
+              <div class="text-warning small fw-bold d-flex align-items-center gap-1">
+                <span>Ingresar al módulo</span>
+                <i class="bx bx-right-arrow-alt"></i>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <a href="/profesionales/index.html" class="card h-100 p-3 text-decoration-none text-main feature-card">
+              <div class="stat-avatar bg-info bg-opacity-10 text-info mb-3">
+                <i class="bx bx-id-card"></i>
+              </div>
+              <h6 class="fw-bold mb-1">Profesionales en Salud</h6>
+              <p class="text-muted small mb-3 flex-grow-1">Gestionar credenciales, fotos de perfil y asignar IPS de atención.</p>
+              <div class="text-info small fw-bold d-flex align-items-center gap-1">
+                <span>Ingresar al módulo</span>
+                <i class="bx bx-right-arrow-alt"></i>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <a href="/pacientes/consultar.html" class="card h-100 p-3 text-decoration-none text-main feature-card">
+              <div class="stat-avatar bg-primary bg-opacity-10 text-primary mb-3">
+                <i class="bx bx-folder-open"></i>
+              </div>
+              <h6 class="fw-bold mb-1">Consultar Pacientes</h6>
+              <p class="text-muted small mb-3 flex-grow-1">Búsqueda avanzada por cédula, nombre, profesional o rango de fechas.</p>
+              <div class="text-primary small fw-bold d-flex align-items-center gap-1">
+                <span>Ingresar al módulo</span>
+                <i class="bx bx-right-arrow-alt"></i>
+              </div>
+            </a>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <a href="/pacientes/exportar.html" class="card h-100 p-3 text-decoration-none text-main feature-card">
+              <div class="stat-avatar bg-success bg-opacity-10 text-success mb-3">
+                <i class="bx bxs-file-export"></i>
+              </div>
+              <h6 class="fw-bold mb-1">Exportar Registros</h6>
+              <p class="text-muted small mb-3 flex-grow-1">Generar reportes oficiales CSV segmentados por sede y personal de salud.</p>
+              <div class="text-success small fw-bold d-flex align-items-center gap-1">
+                <span>Ingresar al módulo</span>
+                <i class="bx bx-right-arrow-alt"></i>
+              </div>
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core Script -->
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    let donutChartInstance = null;
+
+    const coloresEspecialidades = {
+      Psiquiatria: '#A855F7',
+      TerapiaOcupacional: '#FF9100',
+      Psicologia: '#00E5FF',
+      TrabajoSocial: '#00E676',
+    };
+
+    const iconosEspecialidades = {
+      Psiquiatria: 'bx-brain',
+      TerapiaOcupacional: 'bx-accessibility',
+      Psicologia: 'bx-heart',
+      TrabajoSocial: 'bx-group',
+    };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Proteger ruta: Exigir ADMIN
+      const user = await requireUserAuth('ADMIN');
+      if (!user) return;
+
+      // Renderizar layout de navegación y widget de usuario
+      renderAppLayout(user, 'dashboard');
+
+      // Fecha actual en banner
+      document.getElementById('current-date-text').textContent = new Date().toLocaleDateString('es-CO', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+      document.getElementById('welcome-message').textContent = `¡Bienvenido, ${user.nombre}! 👋`;
+
+      await cargarDatos();
+    });
+
+    async function cargarDatos(esRefresco = false) {
+      const btnRef = document.getElementById('btn-refresh');
+      if (esRefresco && btnRef) {
+        btnRef.disabled = true;
+        btnRef.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Actualizando...';
+      }
+
+      try {
+        const data = await apiFetch('/api/admin/resumen');
+        if (!data) return;
+
+        // Actualizar KPIs
+        document.getElementById('kpi-total-pacientes').textContent = data.totalPacientes ?? 0;
+        document.getElementById('kpi-total-profesionales').textContent = data.totalProfesionales ?? 0;
+        document.getElementById('kpi-atenciones-hoy').textContent = data.atencioneHoy ?? 0;
+        document.getElementById('chart-total-chip').textContent = `Total: ${data.totalPacientes ?? 0}`;
+
+        const totalGeneral = data.totalPacientes || 0;
+
+        // Renderizar ApexCharts Donut
+        renderDonutChart(data.especialidades || [], totalGeneral);
+
+        // Renderizar Desglose por Especialidad
+        renderAreasProgress(data.especialidades || [], totalGeneral);
+
+        // Renderizar Atenciones por IPS
+        renderIpsVenues(data.atencionesPorIps || [], totalGeneral);
+
+        if (esRefresco) {
+          showToast('Datos actualizados correctamente.', 'success');
+        }
+      } catch (err) {
+        showToast(err.message || 'Error al cargar los datos del dashboard.', 'error');
+      } finally {
+        if (esRefresco && btnRef) {
+          btnRef.disabled = false;
+          btnRef.innerHTML = '<i class="bx bx-refresh fs-5"></i><span>Actualizar Datos</span>';
+        }
+      }
+    }
+
+    function renderDonutChart(especialidades, grandTotal) {
+      const chartContainer = document.getElementById('apex-donut-chart');
+      chartContainer.innerHTML = '';
+
+      const labels = especialidades.map(e => e.title);
+      const series = especialidades.map(e => e.total);
+      const colors = especialidades.map(e => coloresEspecialidades[e.value] || '#1A78C2');
+
+      if (series.length === 0 || series.every(v => v === 0)) {
+        chartContainer.innerHTML = `
+          <div class="text-center text-muted py-4">
+            <i class="bx bx-pie-chart-alt-2 fs-1 mb-2 d-block opacity-50"></i>
+            <div>Sin atenciones registradas aún</div>
+          </div>
+        `;
+        return;
+      }
+
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+
+      const options = {
+        chart: {
+          type: 'donut',
+          height: 320,
+          fontFamily: 'Public Sans, sans-serif',
+          toolbar: { show: false }
+        },
+        labels: labels,
+        series: series,
+        colors: colors,
+        stroke: {
+          width: 2,
+          colors: [isDark ? '#151D2E' : '#FFFFFF']
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: (val) => `${Math.round(val)}%`
+        },
+        legend: {
+          position: 'bottom',
+          labels: { colors: isDark ? '#CBD5E1' : '#475569' }
+        },
+        tooltip: {
+          theme: isDark ? 'dark' : 'light',
+          y: { formatter: (val) => `${val} pacientes` }
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '70%',
+              labels: {
+                show: true,
+                total: {
+                  show: true,
+                  label: 'Atenciones',
+                  formatter: () => String(grandTotal)
+                }
+              }
+            }
+          }
+        }
+      };
+
+      if (donutChartInstance) {
+        donutChartInstance.destroy();
+      }
+      donutChartInstance = new ApexCharts(chartContainer, options);
+      donutChartInstance.render();
+    }
+
+    function renderAreasProgress(especialidades, grandTotal) {
+      const container = document.getElementById('areas-progress-container');
+      if (!container) return;
+
+      container.innerHTML = especialidades.map(esp => {
+        const pct = grandTotal > 0 ? Math.round((esp.total / grandTotal) * 100) : 0;
+        const col = coloresEspecialidades[esp.value] || '#1A78C2';
+        const ico = iconosEspecialidades[esp.value] || 'bx-pulse';
+
+        return `
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; background: ${col}20; color: ${col}; font-size: 1.35rem;">
+              <i class="bx ${ico}"></i>
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="fw-semibold">${esp.title}</span>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="fw-bold">${esp.total} pac.</span>
+                  <span class="badge" style="background: ${col}25; color: ${col};">${pct}%</span>
+                </div>
+              </div>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: ${pct}%; background-color: ${col};" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderIpsVenues(atencionesIps, grandTotal) {
+      const container = document.getElementById('ips-venues-container');
+      if (!container) return;
+
+      if (!atencionesIps || atencionesIps.length === 0) {
+        container.innerHTML = '<div class="col-12 text-muted small">No hay registros de atenciones por sede.</div>';
+        return;
+      }
+
+      container.innerHTML = atencionesIps.map(item => {
+        const pct = grandTotal > 0 ? Math.round((item.total / grandTotal) * 100) : 0;
+        return `
+          <div class="col-md-4">
+            <div class="card p-3 border h-100" style="background: var(--bg-sidebar);">
+              <div class="d-flex align-items-center gap-3 mb-2">
+                <div class="rounded-3 p-2 bg-secondary bg-opacity-10 text-secondary">
+                  <i class="bx bx-buildings fs-4"></i>
+                </div>
+                <div class="overflow-hidden flex-grow-1">
+                  <div class="fw-bold text-truncate">${item.ipsNombre}</div>
+                  <div class="text-muted small">Sede Habilitada</div>
+                </div>
+                <span class="badge bg-secondary">${item.total} pac.</span>
+              </div>
+              <div class="progress my-2" style="height: 6px;">
+                <div class="progress-bar bg-secondary" style="width: ${pct}%;"></div>
+              </div>
+              <div class="d-flex justify-content-between text-muted small">
+                <span>Volumen asistencial</span>
+                <span class="fw-bold text-secondary">${pct}%</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de IPS · Alianza ALES & IPS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+</head>
+<body>
+  <div class="sidebar-backdrop"></div>
+  <div class="app-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/index.html" class="brand-badge">
+          <div class="brand-badge-icon"><img src="/assets/img/logo.svg" alt="Emblema ALES IPS"></div>
+          <div>
+            <div class="d-flex align-items-center">
+              <span class="brand-text-ales">ALES</span><span class="brand-dot">·</span><span class="brand-text-ips">IPS</span>
+            </div>
+            <span class="brand-text-sub">Restaurando Vidas</span>
+          </div>
+        </a>
+      </div>
+      <nav id="sidebar-navigation" class="sidebar-nav"></nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-navbar">
+        <div class="d-flex align-items-center gap-2">
+          <button id="sidebar-toggle-btn" class="btn btn-outline-secondary btn-sm d-lg-none" type="button"><i class="bx bx-menu fs-4"></i></button>
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold"><i class="bx bxs-heart me-1"></i>Fundación ALES</span>
+            <span class="text-muted small">✕</span>
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold"><i class="bx bxs-group me-1"></i>IPS Restaurando Vidas</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="toggleTheme()" title="Cambiar tema">
+            <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+          </button>
+          <div id="user-profile-widget"></div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="page-header">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span id="badge-total-ips" class="badge bg-warning text-dark px-3 py-1 rounded-pill fw-bold">
+                <i class="bx bx-buildings me-1"></i>0 Sedes Habilitadas
+              </span>
+            </div>
+            <h2 class="fw-bold mb-1">Gestión de Sedes IPS</h2>
+            <p class="text-muted small mb-0">Supervisión, habilitación y administración de sedes de atención médica asociadas.</p>
+          </div>
+          <div>
+            <button class="btn btn-warning text-dark fw-bold d-flex align-items-center gap-2 shadow-sm" onclick="abrirModalCrear()">
+              <i class="bx bx-plus-circle fs-5"></i><span>Nueva Sede IPS</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-md-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-warning bg-opacity-10 text-warning"><i class="bx bx-buildings"></i></div>
+                <span class="badge bg-warning bg-opacity-15 text-warning small">Red</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Total Sedes</div>
+              <div id="kpi-total-ips" class="h3 fw-bold text-warning mb-1">...</div>
+              <div class="text-muted small">Puntos de atención</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-success bg-opacity-10 text-success"><i class="bx bx-check-circle"></i></div>
+                <span class="badge bg-success bg-opacity-15 text-success small">Operativas</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Sedes Activas</div>
+              <div id="kpi-activas-ips" class="h3 fw-bold text-success mb-1">...</div>
+              <div class="text-muted small">Habilitadas para consulta</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-danger bg-opacity-10 text-danger"><i class="bx bx-pause-circle"></i></div>
+                <span class="badge bg-danger bg-opacity-15 text-danger small">Pausadas</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Sedes Inactivas</div>
+              <div id="kpi-inactivas-ips" class="h3 fw-bold text-danger mb-1">...</div>
+              <div class="text-muted small">Atención suspendida</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-md-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-info bg-opacity-10 text-info"><i class="bx bx-user-check"></i></div>
+                <span class="badge bg-info bg-opacity-15 text-info small">Personal</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Personal Asignado</div>
+              <div id="kpi-personal-ips" class="h3 fw-bold text-info mb-1">...</div>
+              <div class="text-muted small">Médicos y terapeutas</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Listado de Sedes Autorizadas</h5>
+              <small class="text-muted">Control de habilitación asistencial en Colombia</small>
+            </div>
+            <button class="btn btn-outline-warning text-dark btn-sm d-flex align-items-center gap-1" onclick="abrirModalCrear()">
+              <i class="bx bx-plus"></i><span>Nueva IPS</span>
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-muted small text-uppercase">
+                  <th>Nombre de Sede IPS</th>
+                  <th>Personal en Salud</th>
+                  <th>Estado</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-ips-body">
+                <tr><td colspan="4" class="text-center py-5"><div class="spinner-border text-primary"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <!-- Modal: Crear / Editar Sede IPS -->
+  <div class="modal fade" id="modal-ips" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+        <div class="modal-header border-bottom py-3">
+          <h5 class="modal-title fw-bold d-flex align-items-center gap-2" id="modal-ips-title">
+            <i class="bx bx-buildings text-warning"></i><span>Nueva Sede IPS</span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="form-ips">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label for="ips-nombre" class="form-label small fw-semibold">Nombre de la Sede *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary"><i class="bx bx-building-house"></i></span>
+                <input type="text" id="ips-nombre" class="form-control" placeholder="Ej. Sede Bienestar" required autofocus>
+              </div>
+              <div class="form-text small">Ingresa el nombre descriptivo de la institución prestadora de salud.</div>
+            </div>
+          </div>
+          <div class="modal-footer border-top py-3">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" id="btn-guardar-ips" class="btn btn-warning text-dark fw-bold">Guardar Sede</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    let ipsLista = [];
+    let editandoId = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = await requireUserAuth('ADMIN');
+      if (!user) return;
+      renderAppLayout(user, 'ips');
+
+      await cargarIps();
+
+      document.getElementById('form-ips').onsubmit = async (e) => {
+        e.preventDefault();
+        const nombre = document.getElementById('ips-nombre').value.trim();
+        if (!nombre) return;
+
+        const btn = document.getElementById('btn-guardar-ips');
+        btn.disabled = true;
+
+        try {
+          if (editandoId) {
+            const res = await apiFetch(`/api/ips/${editandoId}`, {
+              method: 'PATCH',
+              body: JSON.stringify({ nombre })
+            });
+            showToast(res.mensaje || 'Sede IPS actualizada.', 'success');
+          } else {
+            const res = await apiFetch('/api/ips', {
+              method: 'POST',
+              body: JSON.stringify({ nombre })
+            });
+            showToast(res.mensaje || 'Sede IPS creada exitosamente.', 'success');
+          }
+
+          bootstrap.Modal.getInstance(document.getElementById('modal-ips')).hide();
+          await cargarIps();
+        } catch (err) {
+          showToast(err.message || 'Error al guardar sede IPS.', 'error');
+        } finally {
+          btn.disabled = false;
+        }
+      };
+    });
+
+    async function cargarIps() {
+      try {
+        const data = await apiFetch('/api/ips');
+        ipsLista = data?.ips || [];
+
+        const total = ipsLista.length;
+        const activas = ipsLista.filter(i => i.activo).length;
+        const inactivas = total - activas;
+        const totalPersonal = ipsLista.reduce((acc, curr) => acc + (curr.totalProfesionales || 0), 0);
+
+        document.getElementById('kpi-total-ips').textContent = total;
+        document.getElementById('kpi-activas-ips').textContent = activas;
+        document.getElementById('kpi-inactivas-ips').textContent = inactivas;
+        document.getElementById('kpi-personal-ips').textContent = totalPersonal;
+        document.getElementById('badge-total-ips').innerHTML = `<i class="bx bx-buildings me-1"></i>${activas} Sedes Habilitadas`;
+
+        renderTablaIps(ipsLista);
+      } catch (err) {
+        showToast('Error al cargar sedes IPS.', 'error');
+      }
+    }
+
+    function renderTablaIps(lista) {
+      const tbody = document.getElementById('tabla-ips-body');
+      if (lista.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="text-center py-5">
+              <i class="bx bx-buildings text-muted fs-1 mb-2 d-block opacity-50"></i>
+              <h6 class="fw-bold mb-1">No hay sedes IPS registradas</h6>
+              <p class="text-muted small mb-0">Comienza registrando la primera sede autorizada de atención.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = lista.map(i => `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-3">
+              <div class="stat-avatar bg-warning bg-opacity-10 text-warning" style="width: 42px; height: 42px;">
+                <i class="bx bx-building"></i>
+              </div>
+              <div>
+                <div class="fw-bold">${i.nombre}</div>
+                <div class="text-muted small">ID Sede #${i.id}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="badge bg-secondary bg-opacity-15 text-secondary fw-semibold">
+              <i class="bx bx-user me-1"></i>${i.totalProfesionales || 0} profesionales
+            </span>
+          </td>
+          <td>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" ${i.activo ? 'checked' : ''} onchange="cambiarEstadoIps(${i.id}, this.checked)">
+              <label class="form-check-label small ${i.activo ? 'text-success fw-semibold' : 'text-muted'}">
+                ${i.activo ? 'Activa' : 'Inactiva'}
+              </label>
+            </div>
+          </td>
+          <td class="text-end">
+            <button class="btn btn-outline-secondary btn-sm" onclick="abrirModalEditar(${i.id}, '${i.nombre}')" title="Editar nombre">
+              <i class="bx bx-edit-alt"></i>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function abrirModalCrear() {
+      editandoId = null;
+      document.getElementById('modal-ips-title').innerHTML = '<i class="bx bx-plus-circle text-warning"></i><span>Nueva Sede IPS</span>';
+      document.getElementById('form-ips').reset();
+      new bootstrap.Modal(document.getElementById('modal-ips')).show();
+    }
+
+    function abrirModalEditar(id, nombre) {
+      editandoId = id;
+      document.getElementById('modal-ips-title').innerHTML = '<i class="bx bx-edit-alt text-warning"></i><span>Editar Sede IPS</span>';
+      document.getElementById('ips-nombre').value = nombre;
+      new bootstrap.Modal(document.getElementById('modal-ips')).show();
+    }
+
+    async function cambiarEstadoIps(id, activo) {
+      try {
+        const res = await apiFetch(`/api/ips/${id}/estado`, {
+          method: 'PATCH',
+          body: JSON.stringify({ activo })
+        });
+        showToast(res.mensaje || 'Estado de la sede actualizado.', 'success');
+        await cargarIps();
+      } catch (err) {
+        showToast(err.message || 'Error al actualizar sede.', 'error');
+        await cargarIps();
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Estadísticas Clínicas · Alianza ALES & IPS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=3.5">
+</head>
+<body>
+  <div class="sidebar-backdrop"></div>
+  <div class="app-wrapper">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/index.html" class="brand-badge">
+          <div class="brand-badge-icon"><img src="/assets/img/logo.svg" alt="Emblema ALES IPS"></div>
+          <div>
+            <div class="d-flex align-items-center">
+              <span class="brand-text-ales">ALES</span><span class="brand-dot">·</span><span class="brand-text-ips">IPS</span>
+            </div>
+            <span class="brand-text-sub">Restaurando Vidas</span>
+          </div>
+        </a>
+      </div>
+      <nav id="sidebar-navigation" class="sidebar-nav"></nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="top-navbar">
+        <div class="d-flex align-items-center gap-2">
+          <button id="sidebar-toggle-btn" class="btn btn-outline-secondary btn-sm d-lg-none" type="button"><i class="bx bx-menu fs-4"></i></button>
+          <div class="d-none d-md-flex align-items-center gap-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary fw-bold"><i class="bx bxs-heart me-1"></i>Fundación ALES</span>
+            <span class="text-muted small">✕</span>
+            <span class="badge bg-success bg-opacity-10 text-success fw-bold"><i class="bx bxs-group me-1"></i>IPS Restaurando Vidas</span>
+          </div>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <button class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" onclick="toggleTheme()" title="Cambiar tema">
+            <i id="theme-toggle-icon" class="bx bx-sun fs-5"></i>
+          </button>
+          <div id="user-profile-widget"></div>
+        </div>
+      </header>
+
+      <main class="content-body">
+        <div class="page-header">
+          <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+              <span id="badge-esp-header" class="badge bg-secondary px-3 py-1 rounded-pill fw-bold">
+                <i class="bx bx-pulse me-1"></i>Personal Médico
+              </span>
+            </div>
+            <h2 class="fw-bold mb-1">Mis Estadísticas Clínicas</h2>
+            <p class="text-muted small mb-0">Supervisa tu desempeño médico y el histórico de atenciones registradas en el sistema.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary d-flex align-items-center gap-1 shadow-sm" onclick="cargarStats(true)">
+              <i class="bx bx-refresh fs-5"></i><span>Actualizar</span>
+            </button>
+            <a href="/pacientes/registrar.html" class="btn btn-primary d-flex align-items-center gap-2 shadow-sm">
+              <i class="bx bx-user-plus fs-5"></i><span>Registrar Paciente</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 KPIs de Estadísticas -->
+        <div class="row g-3 mb-4">
+          <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-primary bg-opacity-10 text-primary"><i class="bx bx-calendar-check"></i></div>
+                <span class="badge bg-primary bg-opacity-15 text-primary small">Hoy</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Atenciones Hoy</div>
+              <div id="stat-hoy" class="display-6 fw-bold text-primary mb-1">...</div>
+              <div class="text-muted small">Pacientes atendidos en la jornada de hoy</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-warning bg-opacity-10 text-warning"><i class="bx bx-calendar-week"></i></div>
+                <span class="badge bg-warning bg-opacity-15 text-warning small">Semana</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Esta Semana</div>
+              <div id="stat-semana" class="display-6 fw-bold text-warning mb-1">...</div>
+              <div class="text-muted small">Consultas ingresadas durante la semana</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-info bg-opacity-10 text-info"><i class="bx bx-calendar"></i></div>
+                <span class="badge bg-info bg-opacity-15 text-info small">Mes</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Este Mes</div>
+              <div id="stat-mes" class="display-6 fw-bold text-info mb-1">...</div>
+              <div class="text-muted small">Atenciones registradas en el mes actual</div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-3">
+            <div class="card stat-card p-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="stat-avatar bg-secondary bg-opacity-10 text-secondary"><i class="bx bx-group"></i></div>
+                <span class="badge bg-secondary bg-opacity-15 text-secondary small">Histórico</span>
+              </div>
+              <div class="text-muted small text-uppercase fw-bold">Total Histórico</div>
+              <div id="stat-general" class="display-6 fw-bold text-secondary mb-1">...</div>
+              <div class="text-muted small">Total acumulado de pacientes atendidos</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla de Últimas Atenciones -->
+        <div class="card p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h5 class="fw-bold mb-0">Últimos Pacientes Registrados</h5>
+              <small class="text-muted">Las consultas médicas más recientes ingresadas bajo tu credencial</small>
+            </div>
+            <a href="/pacientes/registrar.html" class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1">
+              <i class="bx bx-plus"></i><span>Nueva Consulta</span>
+            </a>
+          </div>
+
+          <hr class="opacity-25 my-2">
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-muted small text-uppercase">
+                  <th>Paciente</th>
+                  <th>Cédula</th>
+                  <th>Fecha de Atención</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-ultimos-pacientes-body">
+                <tr><td colspan="3" class="text-center py-4"><div class="spinner-border text-primary"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/js/main.js?v=3.0"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = await requireUserAuth('PROFESIONAL');
+      if (!user) return;
+      renderAppLayout(user, 'estadisticas');
+
+      if (user.especialidadTexto) {
+        document.getElementById('badge-esp-header').innerHTML = `<i class="bx bx-pulse me-1"></i>${user.especialidadTexto}`;
+      }
+
+      await cargarStats();
+    });
+
+    async function cargarStats(mostrarToast = false) {
+      try {
+        const data = await apiFetch('/api/profesional/mis-stats');
+        if (!data) return;
+
+        document.getElementById('stat-hoy').textContent = data.totalHoy ?? 0;
+        document.getElementById('stat-semana').textContent = data.totalSemana ?? 0;
+        document.getElementById('stat-mes').textContent = data.totalMes ?? 0;
+        document.getElementById('stat-general').textContent = data.totalGeneral ?? 0;
+
+        renderUltimos(data.ultimosPacientes || []);
+
+        if (mostrarToast) {
+          showToast('Estadísticas actualizadas con éxito.', 'success');
+        }
+      } catch (err) {
+        showToast(err.message || 'Error al cargar estadísticas.', 'error');
+      }
+    }
+
+    function renderUltimos(lista) {
+      const tbody = document.getElementById('tabla-ultimos-pacientes-body');
+      if (lista.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="3" class="text-center py-5">
+              <i class="bx bx-calendar-x text-muted fs-1 mb-2 d-block opacity-50"></i>
+              <h6 class="fw-bold mb-1">Sin atenciones registradas</h6>
+              <p class="text-muted small mb-0">Aún no has registrado pacientes con tu credencial.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = lista.map(p => `
+        <tr>
+          <td>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bx bx-user-check text-primary fs-5"></i>
+              <span class="fw-bold">${p.nombreCompleto}</span>
+            </div>
+          </td>
+          <td><span class="font-monospace text-muted fw-semibold">${p.cedula}</span></td>
+          <td><span class="text-muted small">${p.fechaTexto}</span></td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>
